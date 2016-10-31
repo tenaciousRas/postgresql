@@ -42,6 +42,13 @@ default['postgresql']['server']['init_package'] =
     else
       'systemd'
     end
+  when 'linuxmint'
+    case
+    when node['platform_version'].to_f < 16.1
+      'upstart'
+    else
+      'systemd'
+    end
   when 'amazon'
     'upstart'
   when 'redhat', 'centos', 'scientific', 'oracle'
@@ -77,7 +84,7 @@ when 'debian'
 
   default['postgresql']['server']['service_name'] = 'postgresql'
 
-when 'ubuntu'
+when 'ubuntu', 'linuxmint'
 
   case
   when node['platform_version'].to_f <= 13.10
